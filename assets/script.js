@@ -10,7 +10,9 @@
 //   .then(function (data) {
 //     console.log(data);
 //   });
-
+var coinValue = document.querySelector("#coin-value");
+var gif1 = document.querySelector("#gif1");
+var gif2 = document.querySelector("#gif2");
 
 var resultTextEl = document.querySelector('#result-text');
 var priceContentEl = document.querySelector('#price');
@@ -163,7 +165,11 @@ function searchingCoin(input) {
         });
     return coinInfo
 }
-searchingCoin();
+function clearPageResults(){
+    coinValue.innerHTML= "";
+    gif1.innerHTML= "";
+    gif2.innerHTML="";
+}
 
 function getCoinsInfo() {
     var coinsInfo;
@@ -255,6 +261,7 @@ var input = document.querySelector(".input");
 searchButton.addEventListener("click", function (event) {
     event.preventDefault();
     var typedInput = input.value;
+    clearPageResults()
     searchingCoin(typedInput);
 
     
