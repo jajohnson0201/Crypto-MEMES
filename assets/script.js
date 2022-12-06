@@ -139,9 +139,10 @@ printMemeResults(testObj4)
 
 const options = {
     method: 'GET',
+    url: 'https://api.coinranking.com/v2/coins',
     headers: {
-        'X-RapidAPI-Key': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
-        'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
+        'x-access-token': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
+        
     }
 };
 var coinInfo ;
