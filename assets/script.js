@@ -34,7 +34,6 @@ var testObj3 = {
 var testObj4 = {
   title: "test title",
   price: "test price",
-
 }
 // Function for displaying price results
 function printPriceResults(priceObj) {
