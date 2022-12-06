@@ -20,121 +20,64 @@ var coinListContentEl = document.querySelector('#coin-list');
 var gifContentEl = document.querySelector('#gif');
 var memeContentEl = document.querySelector('#meme');
 var searchFormEl = document.querySelector('#search-form');
-// test objects
-var testObj1 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj2 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj3 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj4 = {
-  title: "test title",
-  price: "test price",
-}
+
 // Function for displaying price results
 function printPriceResults(priceObj) {
   console.log(priceObj);
 
   // set up `<div>` to hold result content
-  var priceCard = document.querySelector('#price-content');
-  priceCard.classList.add('card');
   var priceBody = document.createElement('div');
-  priceBody.classList.add('card-body');
-  priceCard.append(priceBody);
 
   var titleEl = document.createElement('h3');
-  titleEl.textContent = priceObj.title;
+  titleEl.textContent = priceObj.coins[0].name;
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    '<strong>Price:</strong> ' + priceObj.price + '<br/>';
+    priceObj.coins[0].symbol + '<br>';
+    priceObj.coins[0].iconUrl + '<br>';
+    priceObj.coins[0].price + '<br/>';
+    priceObj.coins[0].change;
 
-  if (priceObj.lastDay) {
-    bodyContentEl.innerHTML +=
-      '<strong>Last 24 Hours:</strong> ' + priceObj.lastDay.join(', ') + '<br/>';
-  } else {
-    bodyContentEl.innerHTML +=
-      "'<strong>Last 24 Hours:</strong> No data for this coin's last 24 hours.";
-  }
 
   priceBody.append(titleEl, bodyContentEl);
 
-  priceContentEl.append(priceCard);
-}
-
-// Function for displaying coin list
-function printCoinListResults(coinListObj) {
-  console.log(coinListObj);
-
-  // set up `<div>` to hold result content
-  var coinListCard = document.querySelector('#coin-list-content');
-  coinListCard.classList.add('card');
-  var coinListBody = document.createElement('div');
-  coinListBody.classList.add('card-body');
-  coinListCard.append(coinListBody);
-
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = 'Popular Coins:';
-
-  var bodyContentEl = document.createElement('p');
-  bodyContentEl.innerHTML =
-    coinListObj.list + '<br/>';
-
-  coinListBody.append(titleEl, bodyContentEl);
-
-  coinListContentEl.append(coinListCard);
+  coinValue.append(priceBody);
 }
 
 // Function for displaying GIF
-function printGifResults(gifObj) {
-  console.log(gifObj);
+function printGifResults(gifObj1) {
+  console.log(gifObj1);
 
   // set up `<div>` to hold result content
-  var gifCard = document.querySelector('#gif-content');
-  gifCard.classList.add('card');
-  var gifBody = document.createElement('div');
-  gifBody.classList.add('card-body');
+  var gifCard = document.querySelector('#gif-1');
   gifCard.append(gifBody);
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    gifObj + '<br/>';
+    gifObj1 + '<br/>';
 
   gifBody.append(bodyContentEl);
 
-  gifContentEl.append(gifCard);
+  gif1.append(gifCard);
 }
 
 // Function for displaying MEME
-function printMemeResults(memeObj) {
-  console.log(memeObj);
+function printGifResults(gifObj2) {
+  console.log(gifObj2);
 
   // set up `<div>` to hold result content
-  var memeCard = document.querySelector('#meme-content');
-  memeCard.classList.add('card');
-  var memeBody = document.createElement('div');
-  memeBody.classList.add('card-body');
-  memeCard.append(memeBody);
+  var gifCard = document.querySelector('#gif-2');
+  gifCard.append(gifBody);
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    memeObj + '<br/>';
+    gifObj2 + '<br/>';
 
-  memeBody.append(bodyContentEl);
+  gifBody.append(bodyContentEl);
 
-  memeContentEl.append(memeCard);
+  gif2.append(gifCard);
 }
-// testing printPriceResults
-printPriceResults(testObj1)
-printCoinListResults(testObj2)
-printGifResults(testObj3)
-printMemeResults(testObj4)
+
 
 
 const options = {
