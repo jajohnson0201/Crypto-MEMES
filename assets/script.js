@@ -29,14 +29,14 @@ function printPriceResults(priceObj) {
   var priceBody = document.createElement('div');
 
   var titleEl = document.createElement('h3');
-  titleEl.textContent = priceObj.coins[0].name;
+  titleEl.textContent = priceObj.data.coin.name;
 
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    priceObj.coins[0].symbol + '<br>';
-    priceObj.coins[0].iconUrl + '<br>';
-    priceObj.coins[0].price + '<br/>';
-    priceObj.coins[0].change;
+    priceObj.data.coin.symbol + '<br>';
+    priceObj.data.coin.iconUrl + '<br>';
+    priceObj.data.coin.price + '<br/>';
+    priceObj.data.coin.change;
 
 
   priceBody.append(titleEl, bodyContentEl);
@@ -78,19 +78,52 @@ function printGifResults(gifObj2) {
   gif2.append(gifCard);
 }
 
-
-
 const options = {
     method: 'GET',
-    url: 'https://api.coinranking.com/v2/coins',
+    
     headers: {
-        'x-access-token': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
-        
+        'X-RapidAPI-Key': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
+		'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
 };
+var coinNameUUID=[];
+function getCoinsUUID () {
+    fetch('https://coinranking1.p.rapidapi.com/coins?'+
+    'referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&'+
+    'orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
+        .then(function (response){
+            return response.json()
+        }) 
+        .then(function(response){
+            console.log(response);
+            for(i=0;i<50;i++){
+                var name = response.data.coins[i].name;
+                var uuid = response.data.coins[i].uuid;
+                localStorage.setItem(name, JSON.stringify(uuid));
+               var NameUUID={
+                name: response.data.coins[i].name,
+                uuid: response.data.coins[i].uuid
+                }
+                coinNameUUID.push(NameUUID);
+            }
+            console.log(coinNameUUID);
+        })
+}
+getCoinsUUID();
+
+var coinName;
+var uuid;
+function getUUID(){
+     uuid = JSON.parse(localStorage.getItem(coinName));
+     console.log(uuid);
+     searchingCoin(uuid);
+}
+
 var coinInfo ;
+console.log(options);
 function searchingCoin(input) {
-     fetch('https://api.coinranking.com/v2/coins?search='+input, options)
+     fetch('https://coinranking1.p.rapidapi.com/coin/'+input+
+     '?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
         .then(function (response) {
             // response.json()
             return response.json()
@@ -99,8 +132,8 @@ function searchingCoin(input) {
             console.log(response)
              coinInfo = response;
             printPriceResults(coinInfo);
-            var coinChange = coinInfo.coins[0].change;
-            gifDisplay(coinChange);
+            var coinChange = coinInfo.data.coin.change;
+            // gifDisplay(coinChange);
         })
         .catch(function (err) {
             console.error(err)
@@ -167,9 +200,12 @@ var input = document.querySelector(".input");
 
 searchButton.addEventListener("click", function (event) {
     event.preventDefault();
-    var typedInput = input.value;
+    var inputValue = input.value;
+    var typedInput = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+    coinName=typedInput;
     clearPageResults()
-    searchingCoin(typedInput);
+    getUUID();
+   // searchingCoin(typedInput);
 
     
 });
