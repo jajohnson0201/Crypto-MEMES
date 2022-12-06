@@ -1,16 +1,52 @@
 
-var CryptoURLKey = "c0d814a3-6f9c-4545-83cd-ba117c72922e";
-var CryptoURL = "https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest?CMC_PRO_API_KEY="
-+ CryptoURLKey;
-// https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest?CMC_PRO_API_KEY=c0d814a3-6f9c-4545-83cd-ba117c72922e
 
-fetch(CryptoURL)
-.then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-  });
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
+        'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
+    }
+};
+
+function searchingCoin() {
+    var coinInfo = fetch('https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
+        .then(function (response) {
+            // response.json()
+            return response.json()
+        })
+        .then(function (response) {
+            console.log(response)
+            return response
+        })
+        .catch(function (err) {
+            console.error(err)
+        });
+    return coinInfo
+}
+searchingCoin();
+
+function getCoinsInfo() {
+    var coinsInfo;
+    fetch('https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    console.log(data.data.coins)
+                    console.log(data.data.coins.length)
+                    coinsInfo = data.data.coins
+                    console.log("inside data")
+                        function getCoinsNames () {
+                                for(var n = 0; n < coinsInfo.length; n++){
+                                    console.log(coinsInfo[n].name)
+                                }
+                        }
+                    getCoinsNames();
+                })
+            }
+        })
+        .catch(function (err) {
+            console.error(err)
+        });
 
 
 //GIF fetch  
@@ -55,3 +91,15 @@ if (cryptoValue === 1) {
     } ;
 
   //to randomize gifs: use a random number generator to choose number from array (of 25?), use the random array number in the path to the mp4 url
+
+    return coinsInfo
+}
+
+
+//getCoinsNames();
+
+var coinsNames = getCoinsInfo();
+console.log(coinsNames);
+//console.log(searchingCoin());
+
+
