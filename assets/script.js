@@ -142,16 +142,19 @@ const options = {
         'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
 };
-
-function searchingCoin() {
-    var coinInfo = fetch('https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
+var coinInfo ;
+function searchingCoin(input) {
+     fetch('https://api.coinranking.com/v2/coins?search='+input, options)
         .then(function (response) {
             // response.json()
             return response.json()
         })
         .then(function (response) {
             console.log(response)
-            return response
+             coinInfo = response;
+            printPriceResults(coinInfo);
+            var coinChange = coinInfo.coins[0].change;
+            gifDisplay(coinChange);
         })
         .catch(function (err) {
             console.error(err)
@@ -214,7 +217,7 @@ var input = document.querySelector(".input");
 searchButton.addEventListener("click", function (event) {
     event.preventDefault();
     var typedInput = input.value;
-    searchingCoin();
+    searchingCoin(typedInput);
 
     
 });
