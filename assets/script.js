@@ -144,16 +144,19 @@ const options = {
         'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
 };
-
-function searchingCoin() {
-    var coinInfo = fetch('https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
+var coinInfo ;
+function searchingCoin(input) {
+     fetch('https://api.coinranking.com/v2/coins?search='+input, options)
         .then(function (response) {
             // response.json()
             return response.json()
         })
         .then(function (response) {
             console.log(response)
-            return response
+             coinInfo = response;
+            printPriceResults(coinInfo);
+            var coinChange = coinInfo.coins[0].change;
+            gifDisplay(coinChange);
         })
         .catch(function (err) {
             console.error(err)
@@ -192,12 +195,12 @@ function getCoinsInfo() {
 
 //gifDisplay()
 if (cryptoValue === 1) {
-  //search for Gifs labeled with the tag 'celebrate'
-  var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
-  fetch(GifURLrequest)
+    //search for Gifs labeled with the tag 'celebrate'
+    var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
+    fetch(GifURLrequest)
     //return json results
     .then(function (response) {
-      return response.json();
+        return response.json();
     })
     .then(function(data) {
       console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
@@ -207,13 +210,13 @@ if (cryptoValue === 1) {
       gifimg.src = data.data[0].images.original.url;
       gifCard.appendChild(gifimg);
     })
-  } else if (cryptoValue === -1) {
-  //searhc for Gifs labeled with the tag 'oh no'
-  var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=oh+no&limit=25&offset=0&rating=g&lang=en';
-  fetch(GifURLrequest)
+} else if (cryptoValue === -1) {
+    //searhc for Gifs labeled with the tag 'oh no'
+    var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=oh+no&limit=25&offset=0&rating=g&lang=en';
+    fetch(GifURLrequest)
     //return json results
     .then(function (response) {
-      return response.json();
+        return response.json();
     })
     .then(function(data) {
       console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
@@ -222,12 +225,12 @@ if (cryptoValue === 1) {
       gifimg.src = data.data[2].images.original.url;
       gifCard.appendChild(gifimg);
     })
-  } else {
-  //searhc for Gifs labeled with the tag 'unsure'
+} else {
+    //searhc for Gifs labeled with the tag 'unsure'
     var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=unsure&limit=25&offset=0&rating=g&lang=en';
     fetch(GifURLrequest)
-      //return json results
-      .then(function (response) {
+    //return json results
+    .then(function (response) {
         return response.json();
       })
       .then(function(data) {
@@ -239,16 +242,21 @@ if (cryptoValue === 1) {
       })
     } ;
 
-  //to randomize gifs: use a random number generator to choose number from array (of 25?), use the random array number in the path to the mp4 url
-
-    return coinsInfo
-}
+//to randomize gifs: use a random number generator to choose number from array (of 25?), use the random array number in the path to the mp4 url
 
 
-//getCoinsNames();
 
-var coinsNames = getCoinsInfo();
-console.log(coinsNames);
-//console.log(searchingCoin());
 
+
+
+var searchButton = document.querySelector(".button");
+var input = document.querySelector(".input");
+
+searchButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    var typedInput = input.value;
+    searchingCoin(typedInput);
+
+    
+});
 
