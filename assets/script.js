@@ -135,7 +135,7 @@ function searchingCoin(input) {
              coinInfo = response;
             printPriceResults(coinInfo);
             var coinChange = coinInfo.data.coin.change;
-            // gifDisplay(coinChange);
+            gifDisplay(coinChange);
         })
         .catch(function (err) {
             console.error(err)
@@ -146,39 +146,19 @@ function searchingCoin(input) {
 // clearPageResults function is for resetting the page when a new coin is searched.
 function clearPageResults(){
     coinValue.innerHTML= "";
+    if(gif1 != null && gif2 != null){
     gif1.innerHTML= "";
     gif2.innerHTML="";
+    }
 }
 
-function getCoinsInfo() {
-    var coinsInfo;
-    fetch('https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (data) {
-                    console.log(data.data.coins)
-                    console.log(data.data.coins.length)
-                    coinsInfo = data.data.coins
-                    console.log("inside data")
-                        function getCoinsNames () {
-                                for(var n = 0; n < coinsInfo.length; n++){
-                                    console.log(coinsInfo[n].name)
-                                }
-                        }
-                    getCoinsNames();
-                })
-            }
-        })
-        .catch(function (err) {
-            console.error(err)
-        });
-      }
+
 //GIF fetch  
   //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' this key is already included in the GifURLrequest
   var cryptoValue = -1 //positive, neutral, or negative value change of searched cryptocurrency
   //var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
 
-//gifDisplay()
+function gifDisplay(cryptoValue){
 if (cryptoValue === 1) {
     //search for Gifs labeled with the tag 'celebrate'
     var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
@@ -226,6 +206,7 @@ if (cryptoValue === 1) {
         gifCard.appendChild(gifimg);
       })
     } ;
+}
 
 //to randomize gifs: use a random number generator to choose number from array (of 25?), use the random array number in the path to the mp4 url
 
