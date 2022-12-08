@@ -22,9 +22,13 @@ function printPriceResults(priceObj) {
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
     priceObj.data.coin.symbol + '<br>'+
-    priceObj.data.coin.iconUrl + '<br>'+
     priceObj.data.coin.price + '<br/>'+
     priceObj.data.coin.change
+    
+    var icon = priceObj.data.coin.iconUrl 
+var img = document.createElement('img');
+img.src = icon;
+bodyContentEl.appendChild(img);
 
 
   priceBody.append(titleEl, bodyContentEl);
