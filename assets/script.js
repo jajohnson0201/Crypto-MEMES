@@ -172,7 +172,7 @@ function getCoinsInfo() {
         .catch(function (err) {
             console.error(err)
         });
-
+      }
 //GIF fetch  
   //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' this key is already included in the GifURLrequest
   var cryptoValue = -1 //positive, neutral, or negative value change of searched cryptocurrency
