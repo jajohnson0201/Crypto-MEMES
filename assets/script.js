@@ -45,11 +45,15 @@ function printPriceResults(priceObj) {
 }
 
 // Function for displaying GIF
-function printGifResults(gifObj1) {
-  console.log(gifObj1);
+function printGifResults(gifObj) {
+  console.log(gifObj);
 
-  // set up `<div>` to hold result content
-  var gifCard = document.querySelector('#gif-1');
+
+  
+  //delet this later
+  gifCard.classList.add('card');
+  var gifBody = document.createElement('div');
+  gifBody.classList.add('card-body');
   gifCard.append(gifBody);
 
   var bodyContentEl = document.createElement('div');
@@ -146,13 +150,35 @@ function clearPageResults(){
     gif2.innerHTML="";
 }
 
-
+function getCoinsInfo() {
+    var coinsInfo;
+    fetch('https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    console.log(data.data.coins)
+                    console.log(data.data.coins.length)
+                    coinsInfo = data.data.coins
+                    console.log("inside data")
+                        function getCoinsNames () {
+                                for(var n = 0; n < coinsInfo.length; n++){
+                                    console.log(coinsInfo[n].name)
+                                }
+                        }
+                    getCoinsNames();
+                })
+            }
+        })
+        .catch(function (err) {
+            console.error(err)
+        });
+      }
 //GIF fetch  
-//var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' this key is already included in the GifURLrequest
-var cryptoValue = 0 //positive, neutral, or negative value change of searched cryptocurrency
-//var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
+  //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' this key is already included in the GifURLrequest
+  var cryptoValue = -1 //positive, neutral, or negative value change of searched cryptocurrency
+  //var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
 
-
+//gifDisplay()
 if (cryptoValue === 1) {
     //search for Gifs labeled with the tag 'celebrate'
     var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
@@ -162,7 +188,12 @@ if (cryptoValue === 1) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
+      console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
+  // set up `<div>` to hold result content
+      var gifCard = document.querySelector('#gifnocat');
+      gifimg = new Image(200, 200);
+      gifimg.src = data.data[0].images.original.url;
+      gifCard.appendChild(gifimg);
     })
 } else if (cryptoValue === -1) {
     //searhc for Gifs labeled with the tag 'oh no'
@@ -173,7 +204,11 @@ if (cryptoValue === 1) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data.data[2].images.original.mp4) //<--- this is the path to the url for the mp4 that will be displayed
+      console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
+      var gifCard = document.querySelector('#gifnocat');
+      gifimg = new Image(200, 200);
+      gifimg.src = data.data[2].images.original.url;
+      gifCard.appendChild(gifimg);
     })
 } else {
     //searhc for Gifs labeled with the tag 'unsure'
@@ -182,11 +217,15 @@ if (cryptoValue === 1) {
     //return json results
     .then(function (response) {
         return response.json();
-    })
-    .then(function(data) {
-        console.log(data.data[1].images.original.mp4) //<--- this is the path to the url for the mp4 that will be displayed
-    })
-} ;
+      })
+      .then(function(data) {
+        console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
+        var gifCard = document.querySelector('#gifnocat');
+        gifimg = new Image(200, 200);
+        gifimg.src = data.data[1].images.original.url;
+        gifCard.appendChild(gifimg);
+      })
+    } ;
 
 //to randomize gifs: use a random number generator to choose number from array (of 25?), use the random array number in the path to the mp4 url
 
