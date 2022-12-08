@@ -21,10 +21,10 @@ function printPriceResults(priceObj) {
 
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    priceObj.data.coin.symbol + '<br>';
-    priceObj.data.coin.iconUrl + '<br>';
-    priceObj.data.coin.price + '<br/>';
-    priceObj.data.coin.change;
+    priceObj.data.coin.symbol + '<br>'+
+    priceObj.data.coin.iconUrl + '<br>'+
+    priceObj.data.coin.price + '<br/>'+
+    priceObj.data.coin.change
 
 
   priceBody.append(titleEl, bodyContentEl);
@@ -146,10 +146,10 @@ function searchingCoin(input) {
 // clearPageResults function is for resetting the page when a new coin is searched.
 function clearPageResults(){
     coinValue.innerHTML= "";
-    if(gif1 != null && gif2 != null){
+    console.log("clearPageResults");
+    console.log(gif1);
     gif1.innerHTML= "";
     gif2.innerHTML="";
-    }
 }
 
 
@@ -200,7 +200,7 @@ if (cryptoValue === 1) {
       })
       .then(function(data) {
         console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
-        var gifCard = document.querySelector('#gifnocat');
+        var gifCard = document.querySelector('#gif1');
         gifimg = new Image(200, 200);
         gifimg.src = data.data[1].images.original.url;
         gifCard.appendChild(gifimg);
