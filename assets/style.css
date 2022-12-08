@@ -1,0 +1,9 @@
+#coin-value {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 3vw;
+}
+
+#icon {
+    display: flex;
+    width: 40%;
+}

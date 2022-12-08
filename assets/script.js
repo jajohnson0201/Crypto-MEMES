@@ -15,21 +15,26 @@ function printPriceResults(priceObj) {
 
   // set up `<div>` to hold result content
   var priceBody = document.createElement('div');
+  priceBody.setAttribute('id', 'price-body');
 
   var titleEl = document.createElement('h3');
-  titleEl.textContent = priceObj.data.coin.name;
+  titleEl.textContent = 'Name: ' + priceObj.data.coin.name;
 
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    priceObj.data.coin.symbol + '<br>'+
-    priceObj.data.coin.price + '<br/>'+
-    priceObj.data.coin.change
+    'Symbol: ' + priceObj.data.coin.symbol + '<br>'+
+    'Price: ' + priceObj.data.coin.price + '<br/>'+
+    'Price Change: ' + priceObj.data.coin.change
     
-    var icon = priceObj.data.coin.iconUrl 
-var img = document.createElement('img');
-img.src = icon;
-bodyContentEl.appendChild(img);
 
+    var icon = priceObj.data.coin.iconUrl 
+    var img = document.createElement('img');
+    img.src = icon;
+
+    var imgDiv = document.createElement('div');
+    imgDiv.setAttribute('id', 'icon');
+    imgDiv.appendChild(img);
+    bodyContentEl.appendChild(imgDiv);
 
   priceBody.append(titleEl, bodyContentEl);
 
@@ -47,7 +52,7 @@ function printGifResults(gifObj) {
 
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    gifObj1 + '<br/>';
+    gifObj + '<br/>';
 
   gifBody.append(bodyContentEl);
 
