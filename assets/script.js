@@ -20,75 +20,28 @@ var coinListContentEl = document.querySelector('#coin-list');
 var gifContentEl = document.querySelector('#gif');
 var memeContentEl = document.querySelector('#meme');
 var searchFormEl = document.querySelector('#search-form');
-// test objects
-var testObj1 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj2 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj3 = {
-  title: "test title",
-  price: "test price",
-}
-var testObj4 = {
-  title: "test title",
-  price: "test price",
-}
+
 // Function for displaying price results
 function printPriceResults(priceObj) {
   console.log(priceObj);
 
   // set up `<div>` to hold result content
-  var priceCard = document.querySelector('#price-content');
-  priceCard.classList.add('card');
   var priceBody = document.createElement('div');
-  priceBody.classList.add('card-body');
-  priceCard.append(priceBody);
 
   var titleEl = document.createElement('h3');
-  titleEl.textContent = priceObj.title;
+  titleEl.textContent = priceObj.data.coin.name;
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    '<strong>Price:</strong> ' + priceObj.price + '<br/>';
+    priceObj.data.coin.symbol + '<br>';
+    priceObj.data.coin.iconUrl + '<br>';
+    priceObj.data.coin.price + '<br/>';
+    priceObj.data.coin.change;
 
-  if (priceObj.lastDay) {
-    bodyContentEl.innerHTML +=
-      '<strong>Last 24 Hours:</strong> ' + priceObj.lastDay.join(', ') + '<br/>';
-  } else {
-    bodyContentEl.innerHTML +=
-      "'<strong>Last 24 Hours:</strong> No data for this coin's last 24 hours.";
-  }
 
   priceBody.append(titleEl, bodyContentEl);
 
-  priceContentEl.append(priceCard);
-}
-
-// Function for displaying coin list
-function printCoinListResults(coinListObj) {
-  console.log(coinListObj);
-
-  // set up `<div>` to hold result content
-  var coinListCard = document.querySelector('#coin-list-content');
-  coinListCard.classList.add('card');
-  var coinListBody = document.createElement('div');
-  coinListBody.classList.add('card-body');
-  coinListCard.append(coinListBody);
-
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = 'Popular Coins:';
-
-  var bodyContentEl = document.createElement('p');
-  bodyContentEl.innerHTML =
-    coinListObj.list + '<br/>';
-
-  coinListBody.append(titleEl, bodyContentEl);
-
-  coinListContentEl.append(coinListCard);
+  coinValue.append(priceBody);
 }
 
 // Function for displaying GIF
@@ -102,53 +55,79 @@ function printGifResults(gifObj) {
   var gifBody = document.createElement('div');
   gifBody.classList.add('card-body');
   gifCard.append(gifBody);
-  
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    gifObj + '<br/>';
+    gifObj1 + '<br/>';
 
   gifBody.append(bodyContentEl);
 
-  gifContentEl.append(gifCard);
+  gif1.append(gifCard);
 }
 
 // Function for displaying MEME
-function printMemeResults(memeObj) {
-  console.log(memeObj);
+function printGifResults(gifObj2) {
+  console.log(gifObj2);
 
   // set up `<div>` to hold result content
-  var memeCard = document.querySelector('#meme-content');
-  memeCard.classList.add('card');
-  var memeBody = document.createElement('div');
-  memeBody.classList.add('card-body');
-  memeCard.append(memeBody);
+  var gifCard = document.querySelector('#gif-2');
+  gifCard.append(gifBody);
 
-  var bodyContentEl = document.createElement('p');
+  var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
-    memeObj + '<br/>';
+    gifObj2 + '<br/>';
 
-  memeBody.append(bodyContentEl);
+  gifBody.append(bodyContentEl);
 
-  memeContentEl.append(memeCard);
+  gif2.append(gifCard);
 }
-// testing printPriceResults
-printPriceResults(testObj1)
-printCoinListResults(testObj2)
-printGifResults(testObj3)
-printMemeResults(testObj4)
-
 
 const options = {
     method: 'GET',
+    
     headers: {
         'X-RapidAPI-Key': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
-        'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
+		'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
 };
+var coinNameUUID=[];
+function getCoinsUUID () {
+    fetch('https://coinranking1.p.rapidapi.com/coins?'+
+    'referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&'+
+    'orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
+        .then(function (response){
+            return response.json()
+        }) 
+        .then(function(response){
+            console.log(response);
+            for(i=0;i<50;i++){
+                var name = response.data.coins[i].name;
+                var uuid = response.data.coins[i].uuid;
+                localStorage.setItem(name, JSON.stringify(uuid));
+               var NameUUID={
+                name: response.data.coins[i].name,
+                uuid: response.data.coins[i].uuid
+                }
+                coinNameUUID.push(NameUUID);
+            }
+            console.log(coinNameUUID);
+        })
+}
+getCoinsUUID();
+
+var coinName;
+var uuid;
+function getUUID(){
+     uuid = JSON.parse(localStorage.getItem(coinName));
+     console.log(uuid);
+     searchingCoin(uuid);
+}
+
 var coinInfo ;
+console.log(options);
 function searchingCoin(input) {
-     fetch('https://api.coinranking.com/v2/coins?search='+input, options)
+     fetch('https://coinranking1.p.rapidapi.com/coin/'+input+
+     '?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
         .then(function (response) {
             // response.json()
             return response.json()
@@ -157,8 +136,8 @@ function searchingCoin(input) {
             console.log(response)
              coinInfo = response;
             printPriceResults(coinInfo);
-            var coinChange = coinInfo.coins[0].change;
-            gifDisplay(coinChange);
+            var coinChange = coinInfo.data.coin.change;
+            // gifDisplay(coinChange);
         })
         .catch(function (err) {
             console.error(err)
@@ -260,9 +239,12 @@ var input = document.querySelector(".input");
 
 searchButton.addEventListener("click", function (event) {
     event.preventDefault();
-    var typedInput = input.value;
+    var inputValue = input.value;
+    var typedInput = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+    coinName=typedInput;
     clearPageResults()
-    searchingCoin(typedInput);
+    getUUID();
+   // searchingCoin(typedInput);
 
     
 });
