@@ -1,15 +1,3 @@
-// var CryptoURLKey = "c0d814a3-6f9c-4545-83cd-ba117c72922e";
-// var CryptoURL = "https://pro-api.pricemarketcap.com/v1/global-metrics/quotes/latest?CMC_PRO_API_KEY="
-// + CryptoURLKey;
-// // https://pro-api.pricemarketcap.com/v1/global-metrics/quotes/latest?CMC_PRO_API_KEY=c0d814a3-6f9c-4545-83cd-ba117c72922e
-
-// fetch(CryptoURL)
-// .then(function (response) {
-//     return response.json();
-//   })
-//   .then(function (data) {
-//     console.log(data);
-//   });
 var coinValue = document.querySelector("#coin-value");
 var gif1 = document.querySelector("#gif1");
 var gif2 = document.querySelector("#gif2");
@@ -78,6 +66,7 @@ function printGifResults(gifObj2) {
   gif2.append(gifCard);
 }
 
+// options value for the fetch headers and method
 const options = {
     method: 'GET',
     
@@ -87,6 +76,9 @@ const options = {
     }
 };
 var coinNameUUID=[];
+// getCoinsUUID function is a fetch that stores coins in local storage, 
+//  and their specific URL parameters... also makes an array of objects for
+//  future project ideas...
 function getCoinsUUID () {
     fetch('https://coinranking1.p.rapidapi.com/coins?'+
     'referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&'+
@@ -113,6 +105,9 @@ getCoinsUUID();
 
 var coinName;
 var uuid;
+
+// this getUUID function is getting the uuid value from local storage,
+//  related to a specific coin, then runs the searchingCoin function with that uuid.
 function getUUID(){
      uuid = JSON.parse(localStorage.getItem(coinName));
      console.log(uuid);
@@ -121,6 +116,9 @@ function getUUID(){
 
 var coinInfo ;
 console.log(options);
+
+// searchingCoin function uses the uuid of a coin to search a specific coin,
+//  then uses the data returned from that to run the display functions...
 function searchingCoin(input) {
      fetch('https://coinranking1.p.rapidapi.com/coin/'+input+
      '?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
@@ -140,6 +138,8 @@ function searchingCoin(input) {
         });
     return coinInfo
 }
+
+// clearPageResults function is for resetting the page when a new coin is searched.
 function clearPageResults(){
     coinValue.innerHTML= "";
     gif1.innerHTML= "";
@@ -197,7 +197,9 @@ if (cryptoValue === 1) {
 
 var searchButton = document.querySelector(".button");
 var input = document.querySelector(".input");
-
+// this event listener takes the input value from the user when the search button is clicked
+// and converts the first letter to capital; to work with saved local storage.
+// this is also where the functions to get coin data and reset page are called.
 searchButton.addEventListener("click", function (event) {
     event.preventDefault();
     var inputValue = input.value;
