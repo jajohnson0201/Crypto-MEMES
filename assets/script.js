@@ -230,3 +230,9 @@ searchButton.addEventListener("click", function (event) {
     
 });
 
+var modalXButton = document.querySelector("#modal-x-button");
+var modal = document.querySelector("#modal");
+modalXButton.addEventListener("click", function(event){
+    event.preventDefault();
+    modal.classList.remove("is-active");
+});
