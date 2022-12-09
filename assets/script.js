@@ -135,11 +135,6 @@ function clearPageResults(){
   //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' <---this key is already included in the GifURLrequest
   //var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
 
-  function rondomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-
 function gifDisplay(cryptoValue){
 var randomNum = Math.floor(Math.random() * (Math.floor(26) - Math.ceil(0)) + Math.ceil(0));
 if (cryptoValue > 1) {
