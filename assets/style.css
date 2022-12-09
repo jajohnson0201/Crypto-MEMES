@@ -8,3 +8,9 @@
     width: 40%;
     margin: 2vw;
 }
+
+#gif1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
