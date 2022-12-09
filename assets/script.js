@@ -135,7 +135,13 @@ function clearPageResults(){
   //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' <---this key is already included in the GifURLrequest
   //var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
 
+  function rondomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+
 function gifDisplay(cryptoValue){
+var randomNum = Math.floor(Math.random() * (Math.floor(26) - Math.ceil(0)) + Math.ceil(0));
 if (cryptoValue > 1) {
     //search for Gifs labeled with the tag 'celebrate'
     var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
@@ -145,11 +151,10 @@ if (cryptoValue > 1) {
         return response.json();
     })
     .then(function(data) {
-      console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
   // set up `<div>` to hold result content
       var gifCard = document.querySelector('#gif1');
       gifimg = new Image(400, 400);
-      gifimg.src = data.data[0].images.original.url;
+      gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
       gifCard.appendChild(gifimg);
     })
 } else if (cryptoValue < -1) {
@@ -161,10 +166,9 @@ if (cryptoValue > 1) {
         return response.json();
     })
     .then(function(data) {
-      console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
       var gifCard = document.querySelector('#gif1');
       gifimg = new Image(400, 400);
-      gifimg.src = data.data[2].images.original.url;
+      gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
       gifCard.appendChild(gifimg);
     })
 } else {
@@ -176,15 +180,13 @@ if (cryptoValue > 1) {
         return response.json();
       })
       .then(function(data) {
-        console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
         var gifCard = document.querySelector('#gif1');
         gifimg = new Image(400, 400);
-        gifimg.src = data.data[1].images.original.url;
+        gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
         gifCard.appendChild(gifimg);
       })
     } ;
 }
-
 
 var searchButton = document.querySelector(".button");
 var input = document.querySelector(".input");
