@@ -2,13 +2,6 @@ var coinValue = document.querySelector("#coin-value");
 var gif1 = document.querySelector("#gif1");
 var gif2 = document.querySelector("#gif2");
 
-var resultTextEl = document.querySelector('#result-text');
-var priceContentEl = document.querySelector('#price');
-var coinListContentEl = document.querySelector('#coin-list');
-var gifContentEl = document.querySelector('#gif');
-var memeContentEl = document.querySelector('#meme');
-var searchFormEl = document.querySelector('#search-form');
-
 // Function for displaying price results
 function printPriceResults(priceObj) {
   console.log(priceObj);
@@ -34,7 +27,7 @@ function printPriceResults(priceObj) {
     var imgDiv = document.createElement('div');
     imgDiv.setAttribute('id', 'icon');
     imgDiv.appendChild(img);
-    bodyContentEl.appendChild(imgDiv);
+    gif1.appendChild(imgDiv);
 
   priceBody.append(titleEl, bodyContentEl);
 
@@ -44,11 +37,8 @@ function printPriceResults(priceObj) {
 // Function for displaying GIF
 function printGifResults(gifObj) {
   console.log(gifObj);
-  
-  gifCard.classList.add('card');
+
   var gifBody = document.createElement('div');
-  gifBody.classList.add('card-body');
-  gifCard.append(gifBody);
 
   var bodyContentEl = document.createElement('div');
   bodyContentEl.innerHTML =
@@ -56,24 +46,7 @@ function printGifResults(gifObj) {
 
   gifBody.append(bodyContentEl);
 
-  gif1.append(gifCard);
-}
-
-// Function for displaying MEME
-function printGifResults(gifObj2) {
-  console.log(gifObj2);
-
-  // set up `<div>` to hold result content
-  var gifCard = document.querySelector('#gif-2');
-  gifCard.append(gifBody);
-
-  var bodyContentEl = document.createElement('div');
-  bodyContentEl.innerHTML =
-    gifObj2 + '<br/>';
-
-  gifBody.append(bodyContentEl);
-
-  gif2.append(gifCard);
+  gif1.append(gifBody);
 }
 
 // options value for the fetch headers and method
@@ -175,7 +148,7 @@ if (cryptoValue > 1) {
       console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
   // set up `<div>` to hold result content
       var gifCard = document.querySelector('#gif1');
-      gifimg = new Image(200, 200);
+      gifimg = new Image(400, 400);
       gifimg.src = data.data[0].images.original.url;
       gifCard.appendChild(gifimg);
     })
@@ -190,7 +163,7 @@ if (cryptoValue > 1) {
     .then(function(data) {
       console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
       var gifCard = document.querySelector('#gif1');
-      gifimg = new Image(200, 200);
+      gifimg = new Image(400, 400);
       gifimg.src = data.data[2].images.original.url;
       gifCard.appendChild(gifimg);
     })
@@ -205,7 +178,7 @@ if (cryptoValue > 1) {
       .then(function(data) {
         console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
         var gifCard = document.querySelector('#gif1');
-        gifimg = new Image(200, 200);
+        gifimg = new Image(400, 400);
         gifimg.src = data.data[1].images.original.url;
         gifCard.appendChild(gifimg);
       })
