@@ -5,8 +5,8 @@
 
 
 ## Link
-website:  
-github: 
+website:  https://jajohnson0201.github.io/Crypto-MEMES/
+github: https://github.com/jajohnson0201/Crypto-MEMES
 
 ## Description
 The goal with this project was to create a reactive and updated crypto currency website where you are able to search a given currency and you should recieve feedback pertaining to the searched currency with price and the change the coin has undergone in the past 24 hours, you also get 2 gifs that correspond to the change whether it be negative or positive.
