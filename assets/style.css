@@ -2,6 +2,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 3vw;
 }
+
 @media screen and (min-width: 901px) {
     #icon {
         display: flex;
@@ -9,19 +10,29 @@
         margin: 2vw;
     }
 
-#coin-Data-Gif{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-}
-#coin-value{
-    font-size: 2vw;
-}
-#gif1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
+    #coin-Data-Gif {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    #coin-value {
+        font-size: 2vw;
+        
+    }
+
+    #gif {
+        margin-top: 4%;
+        margin-bottom: 4%;
+        max-width: 33%;
+    }
+
+    #gif1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -30,15 +41,18 @@
         width: 40%;
         margin: 2vw;
     }
-    #coin-value{
+
+    #coin-value {
         font-size: 3vw;
     }
+
     #gif1 {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
     }
-    #coin-Data-Gif{
+
+    #coin-Data-Gif {
         flex-direction: column;
     }
 }
@@ -49,13 +63,16 @@
         flex-direction: column;
         align-items: center;
     }
-    #coin-value{
+
+    #coin-value {
         font-size: 4vw;
     }
+
     #icon {
         min-width: 100%;
     }
-    #coin-Data-Gif{
+
+    #coin-Data-Gif {
         flex-direction: column;
     }
 }
