@@ -45,7 +45,7 @@ function printGifResults(gifObj) {
         gifObj + '<br/>';
 
     gifBody.append(bodyContentEl);
-
+''
     gif1.append(gifBody);
 }
 
