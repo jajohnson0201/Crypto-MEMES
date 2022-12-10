@@ -4,23 +4,23 @@ var gif2 = document.querySelector("#gif2");
 
 // Function for displaying price results
 function printPriceResults(priceObj) {
-  console.log(priceObj);
+    console.log(priceObj);
 
-  // set up `<div>` to hold result content
-  var priceBody = document.createElement('div');
-  priceBody.setAttribute('id', 'price-body');
+    // set up `<div>` to hold result content
+    var priceBody = document.createElement('div');
+    priceBody.setAttribute('id', 'price-body');
 
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = 'Name: ' + priceObj.data.coin.name;
+    var titleEl = document.createElement('h3');
+    titleEl.textContent = 'Name: ' + priceObj.data.coin.name;
 
-  var bodyContentEl = document.createElement('div');
-  bodyContentEl.innerHTML =
-    'Symbol: ' + priceObj.data.coin.symbol + '<br>'+
-    'Price: ' + priceObj.data.coin.price + '<br/>'+
-    'Price Change: ' + priceObj.data.coin.change
-    
+    var bodyContentEl = document.createElement('div');
+    bodyContentEl.innerHTML =
+        'Symbol: ' + priceObj.data.coin.symbol + '<br>' +
+        'Price: ' + priceObj.data.coin.price + '<br/>' +
+        'Price Change: ' + priceObj.data.coin.change
 
-    var icon = priceObj.data.coin.iconUrl 
+
+    var icon = priceObj.data.coin.iconUrl
     var img = document.createElement('img');
     img.src = icon;
 
@@ -29,55 +29,55 @@ function printPriceResults(priceObj) {
     imgDiv.appendChild(img);
     gif1.appendChild(imgDiv);
 
-  priceBody.append(titleEl, bodyContentEl);
+    priceBody.append(titleEl, bodyContentEl);
 
-  coinValue.append(priceBody);
+    coinValue.append(priceBody);
 }
 
 // Function for displaying GIF
 function printGifResults(gifObj) {
-  console.log(gifObj);
+    console.log(gifObj);
 
-  var gifBody = document.createElement('div');
+    var gifBody = document.createElement('div');
 
-  var bodyContentEl = document.createElement('div');
-  bodyContentEl.innerHTML =
-    gifObj + '<br/>';
+    var bodyContentEl = document.createElement('div');
+    bodyContentEl.innerHTML =
+        gifObj + '<br/>';
 
-  gifBody.append(bodyContentEl);
+    gifBody.append(bodyContentEl);
 
-  gif1.append(gifBody);
+    gif1.append(gifBody);
 }
 
 // options value for the fetch headers and method
 const options = {
     method: 'GET',
-    
+
     headers: {
         'X-RapidAPI-Key': 'ca0f9543cemshc837d4d0216102bp14f67cjsn5bb262bfcf80',
-		'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
+        'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
 };
-var coinNameUUID=[];
+var coinNameUUID = [];
 // getCoinsUUID function is a fetch that stores coins in local storage, 
 //  and their specific URL parameters... also makes an array of objects for
 //  future project ideas...
-function getCoinsUUID () {
-    fetch('https://coinranking1.p.rapidapi.com/coins?'+
-    'referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&'+
-    'orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
-        .then(function (response){
+function getCoinsUUID() {
+    fetch('https://coinranking1.p.rapidapi.com/coins?' +
+        'referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&' +
+        'orderBy=marketCap&orderDirection=desc&limit=50&offset=0', options)
+        .then(function (response) {
             return response.json()
-        }) 
-        .then(function(response){
+        })
+        .then(function (response) {
             console.log(response);
-            for(i=0;i<50;i++){
+            for (i = 0; i < 50; i++) {
                 var name = response.data.coins[i].name;
                 var uuid = response.data.coins[i].uuid;
                 localStorage.setItem(name, JSON.stringify(uuid));
-               var NameUUID={
-                name: response.data.coins[i].name,
-                uuid: response.data.coins[i].uuid
+                var NameUUID = {
+                    name: response.data.coins[i].name,
+                    uuid: response.data.coins[i].uuid
                 }
                 coinNameUUID.push(NameUUID);
             }
@@ -91,27 +91,26 @@ var uuid;
 
 // this getUUID function is getting the uuid value from local storage,
 //  related to a specific coin, then runs the searchingCoin function with that uuid.
-function getUUID(){
-     uuid = JSON.parse(localStorage.getItem(coinName));
-     console.log(uuid);
-     searchingCoin(uuid);
+function getUUID() {
+    uuid = JSON.parse(localStorage.getItem(coinName));
+    console.log(uuid);
+    searchingCoin(uuid);
 }
 
-var coinInfo ;
-console.log(options);
+var coinInfo;
 
 // searchingCoin function uses the uuid of a coin to search a specific coin,
 //  then uses the data returned from that to run the display functions...
 function searchingCoin(input) {
-     fetch('https://coinranking1.p.rapidapi.com/coin/'+input+
-     '?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
+    fetch('https://coinranking1.p.rapidapi.com/coin/' + input +
+        '?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h', options)
         .then(function (response) {
             // response.json()
             return response.json()
         })
         .then(function (response) {
             console.log(response)
-             coinInfo = response;
+            coinInfo = response;
             printPriceResults(coinInfo);
             var coinChange = coinInfo.data.coin.change;
             gifDisplay(coinChange);
@@ -123,66 +122,69 @@ function searchingCoin(input) {
 }
 
 // clearPageResults function is for resetting the page when a new coin is searched.
-function clearPageResults(){
-    coinValue.innerHTML= "";
+function clearPageResults() {
+    coinValue.innerHTML = "";
     console.log("clearPageResults");
     console.log(gif1);
-    gif1.innerHTML= "";
-    gif2.innerHTML="";
+    gif1.innerHTML = "";
+    gif2.innerHTML = "";
 }
 
 //GIF fetch  
-  //var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' <---this key is already included in the GifURLrequest
-  //var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
+//var GifAPIkey = 'S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3' <---this key is already included in the GifURLrequest
+//var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=' + cryptoValue + '&limit=25&offset=0&rating=g&lang=en';
 
-function gifDisplay(cryptoValue){
-if (cryptoValue > 1) {
-    //search for Gifs labeled with the tag 'celebrate'
-    var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
-    fetch(GifURLrequest)
-    //return json results
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function(data) {
-      console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
-  // set up `<div>` to hold result content
-      var gifCard = document.querySelector('#gif1');
-      gifimg = new Image(400, 400);
-      gifimg.src = data.data[0].images.original.url;
-      gifCard.appendChild(gifimg);
-    })
-} else if (cryptoValue < -1) {
-    //searhc for Gifs labeled with the tag 'oh no'
-    var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=oh+no&limit=25&offset=0&rating=g&lang=en';
-    fetch(GifURLrequest)
-    //return json results
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function(data) {
-      console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
-      var gifCard = document.querySelector('#gif1');
-      gifimg = new Image(400, 400);
-      gifimg.src = data.data[2].images.original.url;
-      gifCard.appendChild(gifimg);
-    })
-} else {
-    //searhc for Gifs labeled with the tag 'unsure'
-    var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=unsure&limit=25&offset=0&rating=g&lang=en';
-    fetch(GifURLrequest)
-    //return json results
-    .then(function (response) {
-        return response.json();
-      })
-      .then(function(data) {
-        console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
-        var gifCard = document.querySelector('#gif1');
-        gifimg = new Image(400, 400);
-        gifimg.src = data.data[1].images.original.url;
-        gifCard.appendChild(gifimg);
-      })
-    } ;
+function gifDisplay(cryptoValue) {
+    if (cryptoValue > 1) {
+        //search for Gifs labeled with the tag 'celebrate'
+        var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
+        fetch(GifURLrequest)
+            //return json results
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data.data[0].images.original.mp4); //<--- this is the path to the url for the mp4 that will be displayed
+                // set up `<div>` to hold result content
+                var gifCard = document.querySelector('#gif1');
+                gifimg = new Image(400, 400);
+                gifimg.setAttribute("id", "gif");
+                gifimg.src = data.data[0].images.original.url;
+                gifCard.appendChild(gifimg);
+            })
+    } else if (cryptoValue < -1) {
+        //searhc for Gifs labeled with the tag 'oh no'
+        var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=oh+no&limit=25&offset=0&rating=g&lang=en';
+        fetch(GifURLrequest)
+            //return json results
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data.data[2].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
+                var gifCard = document.querySelector('#gif1');
+                gifimg = new Image(400, 400);
+                gifimg.setAttribute("id", "gif");
+                gifimg.src = data.data[2].images.original.url;
+                gifCard.appendChild(gifimg);
+            })
+    } else {
+        //searhc for Gifs labeled with the tag 'unsure'
+        var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=unsure&limit=25&offset=0&rating=g&lang=en';
+        fetch(GifURLrequest)
+            //return json results
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data.data[1].images.original.url) //<--- this is the path to the url for the mp4 that will be displayed
+                var gifCard = document.querySelector('#gif1');
+                gifimg = new Image(400, 400);
+                gifimg.setAttribute("id", "gif");
+                gifimg.src = data.data[1].images.original.url;
+                gifCard.appendChild(gifimg);
+            })
+    };
 }
 
 
@@ -195,17 +197,18 @@ searchButton.addEventListener("click", function (event) {
     event.preventDefault();
     var inputValue = input.value;
     var typedInput = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-    coinName=typedInput;
+    coinName = typedInput;
     clearPageResults()
     getUUID();
-   // searchingCoin(typedInput);
+    // searchingCoin(typedInput);
 
-    
+
 });
 
+// this event listener is to close the opening modal when hitting the "x" in the top right corner.
 var modalXButton = document.querySelector("#modal-x-button");
 var modal = document.querySelector("#modal");
-modalXButton.addEventListener("click", function(event){
+modalXButton.addEventListener("click", function (event) {
     event.preventDefault();
     modal.classList.remove("is-active");
 });
