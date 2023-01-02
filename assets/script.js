@@ -136,7 +136,7 @@ function clearPageResults() {
 
 function gifDisplay(cryptoValue) {
 var randomNum = Math.floor(Math.random() * (Math.floor(26) - Math.ceil(0)) + Math.ceil(0));
-    if (cryptoValue > 1) {
+    if (cryptoValue >= 3) {
         //search for Gifs labeled with the tag 'celebrate'
         var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=celebrate&limit=25&offset=0&rating=g&lang=en';
         fetch(GifURLrequest)
@@ -152,7 +152,38 @@ var randomNum = Math.floor(Math.random() * (Math.floor(26) - Math.ceil(0)) + Mat
                 gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
                 gifCard.appendChild(gifimg);
             })
-    } else if (cryptoValue < -1) {
+    } else if (cryptoValue >= 1 && cryptoValue < 3) {
+      //search for Gifs labeled with the tag 'good'
+      var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=good&limit=25&offset=0&rating=g&lang=en';
+      fetch(GifURLrequest)
+          //return json results
+          .then(function (response) {
+              return response.json();
+          })
+          .then(function (data) {
+                        // set up `<div>` to hold result content
+              var gifCard = document.querySelector('#gif1');
+              gifimg = new Image(400, 400);
+              gifimg.setAttribute("id", "gif");
+              gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
+              gifCard.appendChild(gifimg);
+          })
+    } else if (cryptoValue <= -1 && cryptoValue > -3) {
+      //searhc for Gifs labeled with the tag 'not good'
+      var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=not+good&limit=25&offset=0&rating=g&lang=en';
+      fetch(GifURLrequest)
+          //return json results
+          .then(function (response) {
+              return response.json();
+          })
+          .then(function (data) {
+              var gifCard = document.querySelector('#gif1');
+              gifimg = new Image(400, 400);
+              gifimg.setAttribute("id", "gif");
+              gifimg.src = data.data[randomNum].images.original.url;  //<--- this is the path to the url for the mp4 that will be displayed
+              gifCard.appendChild(gifimg);
+          })          
+    } else if (cryptoValue <= -3) {
         //searhc for Gifs labeled with the tag 'oh no'
         var GifURLrequest = 'https://api.giphy.com/v1/gifs/search?api_key=S3VasUEiDf5XXAyFPT9xCzfa0unw9jt3&q=oh+no&limit=25&offset=0&rating=g&lang=en';
         fetch(GifURLrequest)
